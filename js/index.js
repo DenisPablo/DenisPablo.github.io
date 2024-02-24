@@ -173,7 +173,6 @@ const iniciarTemporizador = (
 };
 
 const calcularTiempoRestante = () => {
-  debugger;
   let tiempoTotal;
   if (tipoRonda === "trabajo") {
     tiempoTotal = trabajoTime;
