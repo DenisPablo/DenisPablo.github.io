@@ -1,0 +1,60 @@
+body {
+  background-color: black;
+  text-align: center;
+  color: aliceblue;
+}
+
+input {
+  background-color: black;
+  color: white;
+  border-radius: 5px; /* Ajusta el valor según desees */
+  box-shadow: 0 0 5px red; /* Ajusta el valor según desees */
+}
+.anta-regular {
+  font-family: "Anta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#timer {
+  color: blue;
+  font-weight: bold;
+  font-size: 200px;
+  margin-bottom: 20px;
+  margin-top: 1%;
+  width: 100%;
+  background-color: rgba(
+    253,
+    244,
+    244,
+    0.1
+  ); /* Fondo blanco muy transparente */
+  border-radius: 30px; /* Border radius */
+}
+
+#configuracion {
+  text-align: center;
+  margin-top: 3%;
+}
+
+#configuracion {
+  display: flex;
+  flex-direction: column;
+}
+
+#configuracion > div {
+  margin-bottom: 10px; /* Espacio entre cada div */
+}
+
+#configuracion label {
+  width: 250px; /* Ancho fijo para los labels */
+  text-align: right; /* Alineación del texto del label a la derecha */
+  margin-right: 10px; /* Espacio entre el label y el input */
+}
+
+#configuracion input {
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 50px; /* Ancho fijo para los inputs */
+  text-align: center;
+}
