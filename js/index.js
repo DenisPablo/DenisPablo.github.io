@@ -57,12 +57,10 @@ reiniciarButton.addEventListener("click", () => {
 pausarButton.addEventListener("click", () => {
   if (timerPaused) {
     // Si el temporizador está pausado, reanudarlo
-    pausarButton.textContent = "Pausar Temporizador";
     timerPaused = false;
     iniciarTemporizador(tiempoRestante, tipoRonda); // Reanudar con el tiempo restante y tipo de ronda
   } else {
     // Si el temporizador está corriendo, pausarlo
-    pausarButton.textContent = "Reanudar Temporizador";
     clearInterval(timerInterval);
     timerPaused = true;
     tiempoRestante = calcularTiempoRestante(); // Almacenar el tiempo restante al pausar
