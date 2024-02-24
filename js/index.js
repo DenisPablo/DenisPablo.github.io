@@ -192,3 +192,14 @@ const detenerTemporizador = () => {
   clearInterval(timerInterval);
   timerDisplay.textContent = "--:--";
 };
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  // Mostrar el botón de instalación en la barra de direcciones (URL)
+  e.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === "accepted") {
+      console.log("El usuario aceptó la instalación");
+    } else {
+      console.log("El usuario canceló la instalación");
+    }
+  });
+});
