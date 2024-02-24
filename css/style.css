@@ -19,7 +19,8 @@ input {
 #timer {
   color: blue;
   font-weight: bold;
-  font-size: 200px;
+  font-size: 150px;
+  margin-top: 2%;
   margin-bottom: 20px;
   width: 100%;
   background-color: rgba(
@@ -34,6 +35,7 @@ input {
 #configuracion {
   text-align: center;
   margin-top: 3%;
+  margin: 0 auto;
 }
 
 #configuracion {
@@ -60,7 +62,7 @@ input {
 
 .banner {
   width: 100%;
-  height: 200px; /* ajusta la altura según sea necesario */
+  height: 150px; /* ajusta la altura según sea necesario */
   background-color: #f0f0f0; /* color de fondo opcional */
   overflow: hidden; /* oculta el contenido que se desborda */
   position: relative; /* permite posicionar la imagen absolutamente */

@@ -22,12 +22,12 @@
     <title>Temporizador de BJJ</title>
   </head>
   <body>
-    <div class="banner col-md-12">
+    <div class="banner col-md-10">
       <img src="/assets/bjj.png" alt="BJJ" width="200" />
     </div>
 
-    <main id="configuracion" class="col-md-12">
-      <div id="timer" class="col-md-12">--:--</div>
+    <main id="configuracion" class="col-md-11">
+      <div id="timer" class="col-md-10">--:--</div>
 
       <div>
         <label for="preparacion">Tiempo de preparación:</label>
@@ -53,18 +53,20 @@
       </div>
     </main>
 
-    <button class="col-md-2 btn btn-primary" id="pausar">
-      <img src="/assets/pausa.png" width="20" />
-    </button>
-    <button class="col-md-2 btn btn-primary" id="iniciar">
-      <img src="/assets/tocar.png" width="20" />
-    </button>
-    <button class="col-md-2 btn btn-primary" id="detener">
-      <img src="/assets/detener.png" width="20" />
-    </button>
-    <button class="col-md-2 btn btn-primary" id="reiniciar">
-      <img src="/assets/reiniciar.png" width="20" />
-    </button>
+    <div class="col-md-12">
+      <button class="col-md-2 btn btn-primary" id="pausar">
+        <img src="/assets/pausa.png" width="20" />
+      </button>
+      <button class="col-md-2 btn btn-primary" id="iniciar">
+        <img src="/assets/tocar.png" width="20" />
+      </button>
+      <button class="col-md-2 btn btn-primary" id="detener">
+        <img src="/assets/detener.png" width="20" />
+      </button>
+      <button class="col-md-2 btn btn-primary" id="reiniciar">
+        <img src="/assets/reiniciar.png" width="20" />
+      </button>
+    </div>
 
     <audio id="timbre" src="assets/old-school-bell.mp3"></audio>
     <script
