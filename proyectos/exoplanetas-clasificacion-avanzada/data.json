@@ -2,7 +2,7 @@
   "title": "ExoPlanetas: Clasificación Avanzada",
   "shortDescription": "Solución de IA para clasificación de exoplanetas, desarrollada para el NASA Space Apps Challenge 2025.",
   "longDescription": "Proyecto de inteligencia artificial que utiliza aprendizaje automático para clasificar exoplanetas basándose en datos de la NASA. Desarrollado como parte del NASA Space Apps Challenge 2025, donde logramos clasificarnos en el TOP 5 de la competencia. La solución implementa algoritmos de clasificación avanzados y procesamiento de señales astronómicas.",
-  "technologies": ["Python", "NumPy", "Pandas", "Scikit-learn"],
+  "technologies": ["Python", "NumPy", "Pandas", "Scikit-learn", "FastApi"],
   "year": 2025,
   "status": "Completado",
   "demo": "https://interspace.com.ar/",

@@ -72,11 +72,11 @@ function createProjectCard(project) {
                 <a href="${BASE_URL}proyectos/${projectSlug}/" class="project-link" data-slug="${projectSlug}">
                     <i class="bi bi-eye"></i> Ver detalles
                 </a>
-                ${project.code !== '#' ? `
+                ${project.code && project.code !== '#' ? `
                 <a href="${project.code}" class="project-link" target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-github"></i> Código
                 </a>` : ''}
-                ${project.demo !== '#' ? `
+                ${project.demo && project.demo !== '#' ? `
                 <a href="${project.demo}" class="project-link" target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-box-arrow-up-right"></i> Demo
                 </a>` : ''}
