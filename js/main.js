@@ -1,3 +1,6 @@
+// Base URL para GitHub Pages (repositorio de usuario/organización)
+const BASE_URL = '/';
+
 // Lista de archivos JSON de proyectos
 const projectFiles = [
     'Exoplanetas.json',
@@ -18,7 +21,7 @@ async function loadProjects() {
     for (const file of projectFiles) {
         try {
             // Cargar el archivo JSON
-            const response = await fetch(`Proyectos/${file}`);
+            const response = await fetch(`${BASE_URL}Proyectos/${file}`);
             if (!response.ok) throw new Error(`Error al cargar ${file}`);
             
             const project = await response.json();
@@ -88,7 +91,7 @@ function createProjectCard(project) {
             </div>
             
             <div class="project-links">
-                <a href="proyectos/${projectSlug}/" class="project-link" data-slug="${projectSlug}">
+                <a href="${BASE_URL}proyectos/${projectSlug}/" class="project-link" data-slug="${projectSlug}">
                     <i class="bi bi-eye"></i> Ver detalles
                 </a>
                 ${project.code !== '#' ? `
@@ -107,7 +110,7 @@ function createProjectCard(project) {
     projectElement.addEventListener('click', (e) => {
         // Solo navegar si el clic no fue en un enlace
         if (!e.target.closest('a')) {
-            window.location.href = `proyectos/${projectSlug}/`;
+            window.location.href = `${BASE_URL}proyectos/${projectSlug}/`;
         }
     });
     
