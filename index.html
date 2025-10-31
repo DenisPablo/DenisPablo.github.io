@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Portfolio</title>
+    <!-- Favicon de Bootstrap -->
+    <link
+      rel="icon"
+      href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <!-- Bootstrap 5.3.2 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header id="header">
+      <nav class="navbar">
+        <div class="logo">&lt;Portfolio /&gt;</div>
+        <button class="menu-toggle" aria-label="Menú">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#inicio" class="active">Inicio</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="inicio" class="hero">
+        <div class="container">
+          <h1>Hola, soy <span class="neon-text">Denis Pablo</span></h1>
+          <h2 class="mb-4">
+            Desarrollador Web <span class="badge bg-primary">Backend</span>
+          </h2>
+          <div class="about-me">
+            <p class="lead">
+              Bienvenido a mi portfolio personal donde comparto mis proyectos y
+              habilidades.
+            </p>
+
+            <div class="card mb-4 border-0 bg-transparent">
+              <div class="card-body p-0">
+                <p class="mb-3">
+                  <i class="bi bi-code-slash me-2 text-primary"></i>
+                  Soy un apasionado de la tecnología y la informática, con un
+                  enfoque especial en el desarrollo de soluciones backend
+                  robustas y escalables.
+                </p>
+
+                <p class="mb-3">
+                  <i class="bi bi-lightbulb me-2 text-warning"></i>
+                  Me encanta aprender y mejorar constantemente mis habilidades a
+                  través de nuevos desafíos y proyectos personales.
+                </p>
+
+                <p class="mb-0">
+                  <i class="bi bi-stack me-2 text-info"></i>
+                  Mi experiencia se centra en el desarrollo de APIs y
+                  arquitecturas escalables, aunque siempre estoy abierto a
+                  explorar y dominar nuevas tecnologías.
+                </p>
+              </div>
+            </div>
+          </div>
+          <a href="#proyectos" class="btn">Ver mis proyectos</a>
+        </div>
+      </section>
+
+      <section id="proyectos" class="projects">
+        <div class="container">
+          <h2 class="section-title">Mis Proyectos</h2>
+          <div class="projects-grid" id="projects-container">
+            <!-- Los proyectos se cargarán dinámicamente con JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="contact">
+        <div class="container">
+          <h2 class="section-title">Contáctame</h2>
+          <div class="contact-content">
+            <p>¿Tienes un proyecto en mente? ¡Hablemos!</p>
+            <div class="social-links">
+              <a
+                href="https://github.com/DenisPablo"
+                class="social-link"
+                target="_blank"
+                >GitHub</a
+              >
+              <a
+                href="www.linkedin.com/in/pablo-denis-b8314814a"
+                class="social-link"
+                target="_blank"
+                >LinkedIn</a
+              >
+              <a href="mailto:denispablo17@gmail.com" class="social-link"
+                >Email</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          &copy; <span id="current-year"></span> Tu Nombre. Todos los derechos
+          reservados.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5.3.2 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

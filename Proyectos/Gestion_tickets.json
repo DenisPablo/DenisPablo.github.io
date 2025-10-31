@@ -1,0 +1,30 @@
+{
+  "title": "Sistema de Gestión de Entradas y Tickets",
+  "shortDescription": "Plataforma segura para la venta y validación de entradas con códigos QR únicos y verificación en tiempo real.",
+  "longDescription": "Sistema integral de gestión de entradas que garantiza la máxima seguridad en la venta y validación de tickets. Desarrollado con tecnologías modernas, ofrece un sistema antifraude mediante códigos QR únicos con firmas digitales, verificación en tiempo real y control de acceso detallado. La plataforma está diseñada para manejar grandes volúmenes de ventas y validaciones de manera eficiente, asegurando una experiencia fluida tanto para organizadores como para asistentes.",
+  "technologies": [
+    "Python",
+    "Django",
+    "Django REST Framework",
+    "PostgreSQL",
+    "React",
+    "MercadoPago API"
+  ],
+  "year": 2025,
+  "demo": "#",
+  "code": "https://github.com/DenisPablo/GestionTickets",
+  "features": [
+    "Sistema antifraude con códigos QR únicos y firmas digitales",
+    "Integración con MercadoPago para pagos seguros",
+    "Panel de administración completo para gestión de eventos",
+    "Control de acceso con diferentes niveles de permisos",
+    "Escalable para manejar grandes volúmenes de usuarios",
+    "Verificación de tickets en tiempo real",
+    "Reportes y estadísticas de ventas y asistencia"
+  ],
+  "highlights": [
+    "Sistema de verificación de tickets imposible de falsificar",
+    "Interfaz intuitiva para organizadores y asistentes",
+    "Alta disponibilidad y rendimiento optimizado"
+  ]
+}

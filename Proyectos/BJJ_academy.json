@@ -1,0 +1,21 @@
+{
+  "title": "Sistema de Gestión para Academias de BJJ",
+  "shortDescription": "Plataforma integral para la gestión de academias de Brazilian Jiu-Jitsu.",
+  "longDescription": "Sistema web completo para la administración de academias de Jiu-Jitsu Brasileño. Incluye módulos para gestión de alumnos, control de asistencia, seguimiento de pagos, programación de clases y más. Desarrollado con Django en el backend y tecnologías modernas en el frontend para una experiencia de usuario óptima.",
+  "technologies": ["Python", "Django", "PostgreSQL", "JavaScript", "Bootstrap"],
+  "year": 2025,
+  "status": "En desarrollo",
+  "demo": "#",
+  "code": "https://github.com/DenisPablo/GestionTickets",
+  "features": [
+    "Gestión de alumnos y profesores",
+    "Control de asistencia con QR",
+    "Calendario de clases",
+    "Seguimiento de progreso de alumnos",
+    "Gamificación de los alumnos"
+  ],
+  "highlights": [
+    "Sistema de control de asistencia innovador con códigos QR",
+    "Interfaz intuitiva para seguimiento del progreso de los alumnos"
+  ]
+}
