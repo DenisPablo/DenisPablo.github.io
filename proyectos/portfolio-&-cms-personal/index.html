@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio & CMS Personal | Mi Portfolio</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/project-styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="project-page">
+    <header class="project-header">
+      <div class="container">
+        <a href="../../index.html" class="back-link">
+          <i class="bi bi-arrow-left"></i> Volver al portafolio
+        </a>
+        <div class="d-flex align-items-center gap-3">
+          <h1 class="mb-0">Portfolio & CMS Personal</h1>
+          <span class="badge bg-success">Completado</span>
+        </div>
+        <p class="project-subtitle">
+          Sistema de Gestión de Contenidos (CMS) y Portafolio web dinámico para
+          desarrolladores y profesionales.
+        </p>
+      </div>
+    </header>
+
+    <main class="project-main">
+      <section class="project-overview">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <h2>Descripción del Proyecto</h2>
+              <p>Plataforma integral que combina un CMS robusto con un portafolio web profesional. Permite gestionar y exhibir proyectos, habilidades y CV de manera dinámica y segura. Desarrollado con tecnologías modernas para ofrecer un rendimiento óptimo y una experiencia de usuario excepcional tanto para administradores como visitantes.</p>
+
+              <h3>Características Principales</h3>
+              <ul class="feature-list">
+                <li>Panel de administración completo para gestión de contenido</li>
+                <li>Editor de texto enriquecido con TinyMCE</li>
+                <li>Almacenamiento en la nube con integración de Cloudinary</li>
+                <li>Sistema de autenticación y autorización robusto</li>
+                <li>Gestión de proyectos con categorías y etiquetas</li>
+                <li>Sistema de papelera con Soft Delete</li>
+                <li>Interfaz de usuario moderna y responsiva</li>
+                <li>Sección de CV profesional descargable</li>
+                <li>Galería de proyectos con filtros por categorías</li>
+              </ul>
+
+              <h3>Tecnologías Utilizadas</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">C#</span>
+                <span class="tech-tag">ASP.NET Core</span>
+                <span class="tech-tag">Entity Framework Core</span>
+                <span class="tech-tag">SQL Server</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">TinyMCE</span>
+                <span class="tech-tag">Cloudinary</span>
+                <span class="tech-tag">Bootstrap</span>
+                <span class="tech-tag">jQuery</span>
+                <span class="tech-tag">Docker</span>
+              </div>
+            </div>
+
+            <div class="col-lg-4 project-meta">
+              <div class="project-links">
+                <a href="https://github.com/DenisPablo/Portafolio" class="btn btn-primary mb-2" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-github"></i> Ver en GitHub
+                </a>
+                <a href="#" class="btn btn-outline-primary" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-box-arrow-up-right"></i> Ver Demo
+                </a>
+              </div>
+
+              <div class="project-details">
+                <h4>Detalles del Proyecto</h4>
+                <ul>
+                  <li><strong>Fecha:</strong> 2024</li>
+                  <li><strong>Estado:</strong> Completado</li>
+                </ul>
+              </div>
+
+              <div class="project-highlights mt-4">
+                <h5>Logros</h5>
+                <ul class="feature-list">
+                  <li>Arquitectura modular y escalable</li>
+                  <li>Implementación de patrones de diseño modernos</li>
+                  <li>Alta seguridad con protección contra ataques comunes</li>
+                  <li>Diseño responsivo que se adapta a cualquier dispositivo</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="project-footer">
+      <div class="container text-center">
+        <p>
+          &copy; <span id="current-year"></span> Denis Pablo. Todos los derechos
+          reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Año actual
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>

@@ -1,12 +1,12 @@
 // Base URL para GitHub Pages (repositorio de usuario/organización)
 const BASE_URL = '/';
 
-// Lista de archivos JSON de proyectos
-const projectFiles = [
-    'Exoplanetas.json',
-    'BJJ_academy.json',
-    'Gestion_tickets.json',
-    'Portfolio_CMS.json'
+// Lista de archivos JSON de proyectos con sus rutas
+const projects = [
+    { path: 'exoplanetas-clasificacion-avanzada/data.json', slug: 'exoplanetas-clasificacion-avanzada' },
+    { path: 'sistema-de-gestion-para-academias-de-bjj/data.json', slug: 'sistema-de-gestion-para-academias-de-bjj' },
+    { path: 'sistema-de-gestion-de-entradas-y-tickets/data.json', slug: 'sistema-de-gestion-de-entradas-y-tickets' },
+    { path: 'portfolio-&-cms-personal/data.json', slug: 'portfolio-&-cms-personal' }
 ];
 
 // Cargar proyectos en la página
@@ -18,13 +18,15 @@ async function loadProjects() {
         return;
     }
     
-    for (const file of projectFiles) {
+    for (const projectInfo of projects) {
         try {
             // Cargar el archivo JSON
-            const response = await fetch(`${BASE_URL}Proyectos/${file}`);
-            if (!response.ok) throw new Error(`Error al cargar ${file}`);
+            const response = await fetch(`${BASE_URL}proyectos/${projectInfo.path}`);
+            if (!response.ok) throw new Error(`Error al cargar ${projectInfo.path}`);
             
             const project = await response.json();
+            // Agregar el slug al objeto del proyecto para usarlo en los enlaces
+            project.slug = projectInfo.slug;
             const projectCard = createProjectCard(project);
             projectsContainer.appendChild(projectCard);
         } catch (error) {
@@ -43,32 +45,8 @@ function createProjectCard(project) {
     const projectElement = document.createElement('div');
     projectElement.className = 'project-card';
     
-    // Mapeo directo de títulos a slugs de carpetas
-    const titleToSlugMap = {
-        'ExoPlanetas: Clasificación Avanzada': 'exoplanetas',
-        'Sistema de Gestión para Academias de BJJ': 'bjj-academy',
-        'Sistema de Gestión de Tickets': 'gestion-tickets',
-        'Portfolio & CMS Personal': 'portfolio-cms'
-    };
-    
-    // Usar el mapeo directo basado en el título exacto
-    let projectSlug = titleToSlugMap[project.title];
-    
-    // Si no hay coincidencia exacta, buscar una coincidencia parcial
-    if (!projectSlug) {
-        for (const [title, slug] of Object.entries(titleToSlugMap)) {
-            if (project.title.includes(title)) {
-                projectSlug = slug;
-                break;
-            }
-        }
-    }
-    
-    // Si aún no hay coincidencia, usar un slug por defecto
-    if (!projectSlug) {
-        console.warn(`No se encontró un slug para el proyecto: ${project.title}`);
-        projectSlug = 'proyecto';
-    }
+    // Usar el slug que ya está en el objeto del proyecto
+    const projectSlug = project.slug || 'proyecto';
     
     // Limitar la descripción a 120 caracteres
     const shortDesc = project.shortDescription.length > 120 
@@ -79,7 +57,7 @@ function createProjectCard(project) {
         <div class="project-info">
             <h3 class="project-title">
                 ${project.title}
-                ${project.status ? `<span class="status">${project.status}</span>` : ''}
+                ${project.status ? `<span class="status" data-status="${project.status}">${project.status}</span>` : ''}
             </h3>
             <p class="project-short-description">${shortDesc}</p>
             

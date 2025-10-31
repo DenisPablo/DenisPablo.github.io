@@ -250,14 +250,13 @@ body {
 }
 
 .project-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
     color: var(--neon-blue);
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.8rem;
-    line-height: 1.3;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .tech-tag {
@@ -276,13 +275,49 @@ body {
     transform: translateY(-1px);
 }
 
-.status {
-    font-size: 0.8rem;
-    background: rgba(255, 46, 99, 0.1);
-    color: var(--neon-pink);
-    padding: 0.2rem 0.5rem;
+/* Estilos para los estados de los proyectos */
+.project-card .status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    font-weight: normal;
+    margin-left: 0.75rem;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+    transition: all 0.3s ease;
+}
+
+/* Estado: En desarrollo */
+.project-card .status[data-status="En desarrollo"],
+.project-card .status:contains("En desarrollo") {
+    background: rgba(255, 184, 0, 0.15);
+    color: #ffb800;
+    border: 1px solid rgba(255, 184, 0, 0.3);
+}
+
+/* Estado: Completado */
+.project-card .status[data-status="Completado"],
+.project-card .status:contains("Completado") {
+    background: rgba(0, 255, 159, 0.15);
+    color: var(--neon-green);
+    border: 1px solid rgba(0, 255, 159, 0.3);
+}
+
+/* Estado: En pausa */
+.project-card .status[data-status="En pausa"],
+.project-card .status:contains("En pausa") {
+    background: rgba(255, 46, 99, 0.15);
+    color: var(--neon-pink);
+    border: 1px solid rgba(255, 46, 99, 0.3);
+}
+
+/* Efecto hover para todos los estados */
+.project-card:hover .status {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .project-short-description {

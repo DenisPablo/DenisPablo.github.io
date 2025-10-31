@@ -1,0 +1,280 @@
+/* 
+ * Estilos globales para todas las páginas de proyectos
+ * Mantener separado de styles.css para mejor organización
+ */
+
+:root {
+    /* Colores base */
+    --project-bg: #0a192f;
+    --project-card-bg: #112240;
+    --project-text: #e6f1ff;
+    --project-text-secondary: #8892b0;
+    --project-accent: #64ffda;
+    --project-accent-hover: #64ffda;
+    --project-border: #233554;
+    --project-highlight: rgba(100, 255, 218, 0.1);
+}
+
+/* Estilos base para el cuerpo de los proyectos */
+.project-page {
+    background-color: var(--project-bg);
+    color: var(--project-text);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Encabezado del proyecto */
+.project-header {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #64ffda, #00a8cc);
+}
+
+.project-header h1 {
+    font-size: 2.5rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--project-text);
+}
+
+.project-subtitle {
+    color: var(--project-text-secondary);
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Contenido principal */
+.project-main {
+    padding: 4rem 0;
+}
+
+/* Secciones del proyecto */
+.project-section {
+    margin-bottom: 3rem;
+}
+
+.project-section h2 {
+    color: var(--project-accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+    font-size: 2rem;
+}
+
+.project-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--project-accent);
+}
+
+/* Lista de características */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.feature-list li {
+    position: relative;
+    padding-left: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: var(--project-text-secondary);
+}
+
+.feature-list li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--project-accent);
+}
+
+/* Etiquetas de tecnologías */
+.tech-tag {
+    display: inline-block;
+    background: rgba(100, 255, 218, 0.1);
+    color: var(--project-accent);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    margin: 0.3rem;
+    font-size: 0.9rem;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+    background: rgba(100, 255, 218, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Barra lateral de metadatos */
+.project-meta {
+    background: rgba(17, 34, 64, 0.7);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--project-border);
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+}
+
+.project-meta h4 {
+    color: var(--project-text);
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+}
+
+.project-meta ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-meta li {
+    margin-bottom: 0.5rem;
+    color: var(--project-text-secondary);
+}
+
+.project-meta strong {
+    color: var(--project-text);
+    margin-right: 0.5rem;
+}
+
+/* Botones */
+.btn-project {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-project i {
+    margin-right: 0.5rem;
+}
+
+.btn-primary {
+    background-color: var(--project-accent);
+    color: #0a192f;
+    border: 1px solid var(--project-accent);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--project-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    color: var(--project-accent);
+    border: 1px solid var(--project-accent);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--project-highlight);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+}
+
+/* Pie de página */
+.project-footer {
+    background-color: #0a192f;
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 1px solid var(--project-border);
+    margin-top: 4rem;
+}
+
+/* Enlaces de navegación */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--project-accent);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--project-text);
+}
+
+.back-link:hover i {
+    transform: translateX(-3px);
+}
+
+/* Sección de logros */
+.project-highlights {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--project-border);
+}
+
+.project-highlights h5 {
+    color: var(--project-text);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .project-header {
+        padding: 6rem 0 3rem;
+    }
+    
+    .project-main {
+        padding: 3rem 0;
+    }
+    
+    .project-section h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-header {
+        padding: 5rem 0 2rem;
+    }
+    
+    .project-header h1 {
+        font-size: 2rem;
+    }
+    
+    .project-subtitle {
+        font-size: 1rem;
+    }
+    
+    .btn-project {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .project-meta {
+        margin-top: 2rem;
+    }
+}
