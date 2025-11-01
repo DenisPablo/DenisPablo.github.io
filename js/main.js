@@ -247,99 +247,305 @@ function typeWriter() {
     type();
 }
 
+// Llamar a la función para cargar las estadísticas de GitHub al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    fetchGitHubStats();
+});
+
+// Configuración de la API de GitHub
+const GITHUB_USERNAME = 'DenisPablo';
+// Opcional: Agrega tu token de acceso personal aquí para aumentar el límite de la API
+// const GITHUB_TOKEN = 'tu_token_aqui';
+
+// Función para realizar peticiones a la API de GitHub con manejo de errores
+async function fetchWithRateLimit(url) {
+    const headers = {
+        'Accept': 'application/vnd.github.v3+json',
+        // Descomenta la siguiente línea si estás usando un token
+        // 'Authorization': `token ${GITHUB_TOKEN}`
+    };
+
+    try {
+        const response = await fetch(url, { headers });
+        
+        // Verificar si hemos alcanzado el límite de la API
+        if (response.status === 403) {
+            const rateLimitReset = response.headers.get('X-RateLimit-Reset');
+            const resetTime = rateLimitReset ? new Date(rateLimitReset * 1000).toLocaleTimeString() : 'pocos minutos';
+            throw new Error(`Límite de la API de GitHub alcanzado. Por favor, inténtalo de nuevo después de ${resetTime}.`);
+        }
+        
+        if (!response.ok) {
+            throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Error en la petición a GitHub:', error);
+        throw error;
+    }
+}
+
 // Lógica para obtener y mostrar estadísticas de GitHub
 async function fetchGitHubStats() {
-    const username = 'DenisPablo';
+    const username = GITHUB_USERNAME;
     const reposUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
     const eventsUrl = `https://api.github.com/users/${username}/events/public?per_page=10`;
+    
+    // Mostrar estado de carga
+    document.getElementById('github-repos-count').textContent = 'Cargando...';
+    document.getElementById('github-stars-count').textContent = 'Cargando...';
+    document.getElementById('github-commits-count').textContent = 'Cargando...';
+    document.querySelector('.language-chart').innerHTML = '<p class="text-muted">Cargando datos de lenguajes...</p>';
+    document.querySelector('.activity-list').innerHTML = '<p class="text-muted">Cargando actividad reciente...</p>';
 
     try {
         // Obtener repositorios
-        const reposResponse = await fetch(reposUrl);
-        if (!reposResponse.ok) throw new Error(`Error al obtener repositorios: ${reposResponse.statusText}`);
-        const repos = await reposResponse.json();
+        const repos = await fetchWithRateLimit(reposUrl);
 
         // Calcular número de repositorios públicos
 
-        // Calcular número de repositorios públicos
-        const publicReposCount = repos.filter(repo => !repo.fork).length;
+        // Calcular número de repositorios públicos y commits
+        const publicRepos = repos.filter(repo => !repo.fork);
+        const publicReposCount = publicRepos.length;
         document.getElementById('github-repos-count').textContent = publicReposCount;
+        
+        // Contar commits totales
+        let totalCommits = 0;
+        for (const repo of publicRepos) {
+            try {
+                const commitsUrl = `https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`;
+                const commitsResponse = await fetch(commitsUrl);
+                if (commitsResponse.ok) {
+                    const linkHeader = commitsResponse.headers.get('Link');
+                    if (linkHeader) {
+                        const matches = linkHeader.match(/page=(\d+)>; rel="last"/);
+                        if (matches && matches[1]) {
+                            totalCommits += parseInt(matches[1], 10);
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error(`Error al obtener commits de ${repo.name}:`, e);
+            }
+        }
+        document.getElementById('github-commits-count').textContent = totalCommits;
 
         // Obtener estrellas totales (requiere paginación para más de 100 repos)
         const totalStars = await fetchTotalStars(username);
         document.getElementById('github-stars-count').textContent = totalStars;
 
         // Calcular lenguajes más usados
-        const languageCounts = {};
-        repos.forEach(repo => {
-            if (repo.language) {
-                languageCounts[repo.language] = (languageCounts[repo.language] || 0) + 1;
+        const languageBytes = {};
+        
+        // Obtener los lenguajes de cada repositorio
+        for (const repo of publicRepos) {
+            try {
+                try {
+                    const languagesUrl = `https://api.github.com/repos/${username}/${repo.name}/languages`;
+                    const languages = await fetchWithRateLimit(languagesUrl);
+                    
+                    // Sumar los bytes por lenguaje
+                    Object.entries(languages).forEach(([lang, bytes]) => {
+                        languageBytes[lang] = (languageBytes[lang] || 0) + bytes;
+                    });
+                } catch (error) {
+                    console.error(`Error al obtener lenguajes para ${repo.name}:`, error);
+                    // Continuar con el siguiente repositorio
+                }
+            } catch (e) {
+                console.error(`Error al obtener lenguajes de ${repo.name}:`, e);
             }
-        });
+        }
 
-        const sortedLanguages = Object.entries(languageCounts).sort(([, a], [, b]) => b - a);
-        const totalReposWithLanguage = sortedLanguages.reduce((sum, [, count]) => sum + count, 0);
+        // Ordenar lenguajes por uso (de mayor a menor)
+        const sortedLanguages = Object.entries(languageBytes)
+            .sort(([, a], [, b]) => b - a);
+            
+        const totalBytes = sortedLanguages.reduce((sum, [, bytes]) => sum + bytes, 0);
 
         const languageChart = document.querySelector('.language-chart');
         const languageLegend = document.querySelector('.language-legend');
         languageChart.innerHTML = '';
         languageLegend.innerHTML = '';
 
-        const colors = ['#f1e05a', '#3572A5', '#b07219', '#178600', '#e34c26', '#563d7c', '#dea584', '#f34b7d']; // Colores para lenguajes
+        // Colores para los lenguajes (puedes personalizarlos)
+        const colors = [
+            '#f1e05a', // JavaScript
+            '#3572A5',  // TypeScript
+            '#b07219',  // Java
+            '#178600',  // CSS
+            '#e34c26',  // HTML
+            '#563d7c',  // Ruby
+            '#f34b7d',  // Python
+            '#89e051'   // Go
+        ];
 
-        sortedLanguages.slice(0, 5).forEach(([lang, count], index) => {
-            const percentage = (count / totalReposWithLanguage) * 100;
+        // Mostrar solo los 5 lenguajes principales
+        sortedLanguages.slice(0, 5).forEach(([lang, bytes], index) => {
+            const percentage = (bytes / totalBytes) * 100;
             const color = colors[index % colors.length];
 
+            // Crear barra de progreso
+            const barContainer = document.createElement('div');
+            barContainer.className = 'progress mb-2';
+            barContainer.style.height = '20px';
+            
             const bar = document.createElement('div');
-            bar.className = 'language-bar';
+            bar.className = 'progress-bar';
             bar.style.width = `${percentage}%`;
             bar.style.backgroundColor = color;
+            bar.setAttribute('role', 'progressbar');
+            bar.setAttribute('aria-valuenow', percentage.toFixed(1));
+            bar.setAttribute('aria-valuemin', '0');
+            bar.setAttribute('aria-valuemax', '100');
             bar.setAttribute('data-lang', lang);
-            languageChart.appendChild(bar);
+            bar.title = `${lang}: ${percentage.toFixed(1)}%`;
+            
+            barContainer.appendChild(bar);
+            languageChart.appendChild(barContainer);
 
-            const legendItem = document.createElement('span');
-            legendItem.className = 'legend-item';
-            legendItem.innerHTML = `<span class="legend-color" style="background-color: ${color};"></span> ${lang} (${percentage.toFixed(1)}%)`;
+            // Crear ítem de leyenda
+            const legendItem = document.createElement('div');
+            legendItem.className = 'd-flex align-items-center mb-1';
+            legendItem.innerHTML = `
+                <span class="d-inline-block me-2" style="width: 12px; height: 12px; background-color: ${color};"></span>
+                <span class="me-2">${lang}</span>
+                <span class="ms-auto">${percentage.toFixed(1)}%</span>
+            `;
             languageLegend.appendChild(legendItem);
         });
 
-        // Obtener actividad reciente (últimos commits/eventos)
-        const eventsResponse = await fetch(eventsUrl);
-        if (!eventsResponse.ok) throw new Error(`Error al obtener eventos: ${eventsResponse.statusText}`);
-        const events = await eventsResponse.json();
+        // Obtener actividad reciente (últimos eventos)
+        const events = await fetchWithRateLimit(eventsUrl);
 
         const activityList = document.querySelector('.activity-list');
         activityList.innerHTML = '';
-        events.slice(0, 3).forEach(event => {
-            if (event.type === 'PushEvent' && event.payload.commits) {
-                const commit = event.payload.commits[0];
-                const repoName = event.repo.name.split('/')[1];
-                const timeAgo = formatTimeAgo(new Date(event.created_at));
-                const listItem = document.createElement('li');
-                listItem.className = 'list-group-item bg-transparent text-light border-secondary';
-                listItem.innerHTML = `<i class="bi bi-git me-2 text-info"></i> Nuevo commit en "${repoName}" - "${commit.message}" <span class="float-end text-secondary">${timeAgo}</span>`;
-                activityList.appendChild(listItem);
-            } else if (event.type === 'CreateEvent' && event.payload.ref_type === 'repository') {
-                const repoName = event.repo.name.split('/')[1];
-                const timeAgo = formatTimeAgo(new Date(event.created_at));
-                const listItem = document.createElement('li');
-                listItem.className = 'list-group-item bg-transparent text-light border-secondary';
-                listItem.innerHTML = `<i class="bi bi-folder-plus me-2 text-success"></i> Nuevo repositorio creado: "${repoName}" <span class="float-end text-secondary">${timeAgo}</span>`;
-                activityList.appendChild(listItem);
-            }
-        });
+        
+        // Mapeo de tipos de eventos a íconos y textos
+        const eventTypes = {
+            'PushEvent': { icon: 'git', class: 'info', text: 'Commit en' },
+            'CreateEvent': { icon: 'plus-circle', class: 'success', text: 'Nuevo repositorio' },
+            'PullRequestEvent': { icon: 'git-pull-request', class: 'primary', text: 'Pull Request' },
+            'IssuesEvent': { icon: 'exclamation-circle', class: 'warning', text: 'Issue' },
+            'ForkEvent': { icon: 'git', class: 'secondary', text: 'Hizo fork de' },
+            'WatchEvent': { icon: 'star', class: 'warning', text: 'Dio estrella a' },
+            'IssueCommentEvent': { icon: 'chat-left-text', class: 'info', text: 'Comentó en issue' },
+            'PullRequestReviewCommentEvent': { icon: 'chat-square-text', class: 'primary', text: 'Revisó PR' }
+        };
 
+        // Filtrar y mapear eventos
+        const filteredEvents = events
+            .filter(event => eventTypes[event.type]) // Solo eventos que tenemos mapeados
+            .slice(0, 5); // Mostrar máximo 5 eventos
+
+        if (filteredEvents.length === 0) {
+            const noActivity = document.createElement('li');
+            noActivity.className = 'list-group-item bg-transparent text-light border-secondary';
+            noActivity.textContent = 'No hay actividad reciente para mostrar';
+            activityList.appendChild(noActivity);
+            return;
+        }
+
+        filteredEvents.forEach(event => {
+            const eventType = eventTypes[event.type];
+            const timeAgo = formatTimeAgo(new Date(event.created_at));
+            const repoName = event.repo ? event.repo.name.split('/')[1] : '';
+            
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item bg-transparent text-light border-secondary d-flex align-items-center';
+            
+            // Crear ícono del evento
+            const icon = document.createElement('i');
+            icon.className = `bi bi-${eventType.icon} me-2 text-${eventType.class}`;
+            
+            // Crear contenedor de texto
+            const textContainer = document.createElement('div');
+            textContainer.className = 'flex-grow-1';
+            
+            // Crear mensaje del evento
+            const message = document.createElement('span');
+            
+            // Personalizar mensaje según el tipo de evento
+            if (event.type === 'PushEvent' && event.payload.commits) {
+                const commit = event.payload.commits[0] || {};
+                const commitMessage = commit.message && commit.message.length > 50 
+                    ? commit.message.substring(0, 50) + '...' 
+                    : commit.message || 'Sin mensaje';
+                message.textContent = `${eventType.text} ${repoName}: ${commitMessage}`;
+            } else if (event.type === 'CreateEvent') {
+                message.textContent = `${eventType.text} ${repoName}`;
+            } else if (event.type === 'PullRequestEvent') {
+                const action = event.payload.action; // opened, closed, etc.
+                const pr = event.payload.pull_request;
+                message.textContent = `${eventType.text} #${pr.number}: ${pr.title}`;
+            } else if (event.type === 'IssuesEvent') {
+                const action = event.payload.action;
+                const issue = event.payload.issue;
+                message.textContent = `${eventType.text} #${issue.number}: ${issue.title} (${action})`;
+            } else {
+                message.textContent = `${eventType.text} ${repoName}`;
+            }
+            
+            // Crear contenedor de tiempo
+            const timeContainer = document.createElement('span');
+            timeContainer.className = 'text-secondary ms-2';
+            timeContainer.textContent = timeAgo;
+            
+            // Construir la estructura del elemento
+            textContainer.appendChild(message);
+            listItem.appendChild(icon);
+            listItem.appendChild(textContainer);
+            listItem.appendChild(timeContainer);
+            
+            // Hacer que el elemento sea clickeable si es un evento con URL
+            if (event.repo) {
+                listItem.style.cursor = 'pointer';
+                listItem.addEventListener('click', () => {
+                    window.open(`https://github.com/${event.repo.name}`, '_blank');
+                });
+                listItem.style.transition = 'background-color 0.2s';
+                listItem.addEventListener('mouseover', () => {
+                    listItem.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                });
+                listItem.addEventListener('mouseout', () => {
+                    listItem.style.backgroundColor = 'transparent';
+                });
+            }
+            
+            activityList.appendChild(listItem);
+        });
     } catch (error) {
         console.error('Error al obtener estadísticas de GitHub:', error);
+        
+        // Mostrar mensaje de error en la interfaz
+        const errorMessage = error.message || 'Error desconocido al conectar con GitHub';
+        const errorHtml = `
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">¡Ups! Algo salió mal</h4>
+                <p>${errorMessage}</p>
+                <hr>
+                <p class="mb-0">
+                    <small>
+                        Si el problema persiste, puedes ver mis repositorios directamente en 
+                        <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="alert-link">mi perfil de GitHub</a>.
+                    </small>
+                </p>
+            </div>
+        `;
+        
         const githubStatsSection = document.getElementById('github-stats');
         if (githubStatsSection) {
-            githubStatsSection.innerHTML = '<div class="container"><p class="text-center text-danger">Error al cargar las estadísticas de GitHub. Por favor, inténtalo de nuevo más tarde.</p></div>';
+            githubStatsSection.innerHTML = `<div class="container">${errorHtml}</div>`;
         }
-        // Limpiar los elementos que muestran "Cargando..." si la API falla
-        document.getElementById('github-repos-count').textContent = 'N/A';
-        document.getElementById('github-stars-count').textContent = 'N/A';
-        document.getElementById('github-commits-count').textContent = 'N/A';
+        
+        // Actualizar contadores con valores por defecto
+        document.getElementById('github-repos-count').textContent = 'Error';
+        document.getElementById('github-stars-count').textContent = 'Error';
+        document.getElementById('github-commits-count').textContent = 'Error';
+        
+        // Mostrar mensaje en la consola para desarrolladores
+        console.info('Sugerencia: Para evitar límites de la API, considera crear un token de acceso personal en GitHub y configurarlo en el código.');
 
         document.querySelector('.language-chart').innerHTML = '<p class="text-center text-secondary">No se pudieron cargar los lenguajes.</p>';
         document.querySelector('.language-legend').innerHTML = '';
