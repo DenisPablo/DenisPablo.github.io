@@ -269,12 +269,6 @@ body {
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(8, 217, 214, 0.1);
-    border-color: var(--neon-blue);
-}
-
-.project-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(8, 217, 214, 0.2);
     border-color: var(--neon-blue);
@@ -432,14 +426,10 @@ body {
 }
 
 .project-link:hover {
-    background: rgba(8, 217, 214, 0.2);
-    transform: translateY(-2px);
-}
-
-.project-link:hover {
     color: var(--darker-bg);
     background: var(--neon-blue);
     box-shadow: 0 0 10px rgba(8, 217, 214, 0.5);
+    transform: translateY(-2px);
 }
 
 .project-link svg {
