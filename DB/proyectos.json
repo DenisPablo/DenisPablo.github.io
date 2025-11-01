@@ -19,7 +19,8 @@
     "highlights": [
       "Clasificado en el TOP 5 del NASA Space Apps Challenge 2025",
       "Implementación de algoritmos avanzados de machine learning"
-    ]
+    ],
+    "image": "image/exoplanetas.png"
   },
   {
     "id": 2,
@@ -42,7 +43,8 @@
     "highlights": [
       "Sistema de control de asistencia innovador con códigos QR",
       "Interfaz intuitiva para seguimiento del progreso de los alumnos"
-    ]
+    ],
+    "image": "image/bjj_academy.png"
   },
   {
     "id": 3,
@@ -68,7 +70,8 @@
       "Sistema de verificación de tickets imposible de falsificar",
       "Interfaz intuitiva para organizadores y asistentes",
       "Alta disponibilidad y rendimiento optimizado"
-    ]
+    ],
+    "image": "image/sistema_tickets.png"
   },
   {
     "id": 4,
@@ -108,6 +111,7 @@
       "Implementación de patrones de diseño modernos",
       "Alta seguridad con protección contra ataques comunes",
       "Diseño responsivo que se adapta a cualquier dispositivo"
-    ]
+    ],
+    "image": "image/portfolio_cms_personal"
   }
 ]

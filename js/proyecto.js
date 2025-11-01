@@ -27,6 +27,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.title = `${projectData.title} | Mi Portfolio`;
         document.getElementById('project-title').textContent = projectData.title;
         document.getElementById('project-subtitle').textContent = projectData.shortDescription;
+        
+        const projectImageContainer = document.getElementById('project-image-container');
+        if (projectData.image) {
+            const img = document.createElement('img');
+            img.src = projectData.image;
+            img.alt = projectData.title;
+            img.className = 'img-fluid rounded shadow-sm mb-4'; // Bootstrap classes for responsive image and styling
+            projectImageContainer.appendChild(img);
+        }
+
         document.getElementById('project-description').innerHTML = `<p>${projectData.longDescription}</p>`;
         document.getElementById('project-year').textContent = projectData.year;
         document.getElementById('project-status').textContent = projectData.status || 'Completado';
@@ -68,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (projectData.code && projectData.code !== '#') {
             const codeLink = document.createElement('a');
             codeLink.href = projectData.code;
-            codeLink.className = 'btn btn-primary mb-2';
+            codeLink.className = 'btn btn-primary mb-2 d-block';
             codeLink.target = '_blank';
             codeLink.rel = 'noopener noreferrer';
             codeLink.innerHTML = '<i class="bi bi-github"></i> Ver en GitHub';
@@ -78,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (projectData.demo && projectData.demo !== '#') {
             const demoLink = document.createElement('a');
             demoLink.href = projectData.demo;
-            demoLink.className = 'btn btn-outline-primary';
+            demoLink.className = 'btn btn-outline-primary mb-2 d-block';
             demoLink.target = '_blank';
             demoLink.rel = 'noopener noreferrer';
             demoLink.innerHTML = '<i class="bi bi-box-arrow-up-right"></i> Ver Demo';
