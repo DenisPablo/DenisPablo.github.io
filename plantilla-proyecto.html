@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nombre del Proyecto</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/project-styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/project-styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
@@ -64,69 +64,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Año actual
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // Cargar datos del proyecto
-        document.addEventListener('DOMContentLoaded', function() {
-            const projectData = JSON.parse(sessionStorage.getItem('currentProject'));
-            if (projectData) {
-                // Actualizar contenido con los datos del proyecto
-                document.title = `${projectData.title} | Mi Portfolio`;
-                document.getElementById('project-title').textContent = projectData.title;
-                document.getElementById('project-subtitle').textContent = projectData.shortDescription;
-                document.getElementById('project-description').innerHTML = `<p>${projectData.longDescription}</p>`;
-                document.getElementById('project-year').textContent = projectData.year;
-                document.getElementById('project-status').textContent = projectData.status || 'Completado';
-                
-                // Añadir características
-                const featuresList = document.getElementById('project-features');
-                if (projectData.features && projectData.features.length > 0) {
-                    projectData.features.forEach(feature => {
-                        const li = document.createElement('li');
-                        li.textContent = feature;
-                        featuresList.appendChild(li);
-                    });
-                } else {
-                    document.querySelector('h3').style.display = 'none';
-                    featuresList.style.display = 'none';
-                }
-                
-                // Añadir tecnologías
-                const techContainer = document.getElementById('project-technologies');
-                if (projectData.technologies && projectData.technologies.length > 0) {
-                    projectData.technologies.forEach(tech => {
-                        const span = document.createElement('span');
-                        span.className = 'tech-tag';
-                        span.textContent = tech;
-                        techContainer.appendChild(span);
-                    });
-                }
-                
-                // Añadir enlaces
-                const linksContainer = document.getElementById('project-links');
-                if (projectData.code && projectData.code !== '#') {
-                    const codeLink = document.createElement('a');
-                    codeLink.href = projectData.code;
-                    codeLink.className = 'btn btn-primary mb-2';
-                    codeLink.target = '_blank';
-                    codeLink.rel = 'noopener noreferrer';
-                    codeLink.innerHTML = '<i class="bi bi-github"></i> Ver en GitHub';
-                    linksContainer.appendChild(codeLink);
-                }
-                
-                if (projectData.demo && projectData.demo !== '#') {
-                    const demoLink = document.createElement('a');
-                    demoLink.href = projectData.demo;
-                    demoLink.className = 'btn btn-outline-primary';
-                    demoLink.target = '_blank';
-                    demoLink.rel = 'noopener noreferrer';
-                    demoLink.innerHTML = '<i class="bi bi-box-arrow-up-right"></i> Ver Demo';
-                    linksContainer.appendChild(demoLink);
-                }
-            }
-        });
-    </script>
+    <script src="/js/proyecto.js"></script>
 </body>
 </html>

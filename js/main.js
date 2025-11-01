@@ -1,14 +1,6 @@
 // Base URL para GitHub Pages (repositorio de usuario/organización)
 const BASE_URL = '/';
 
-// Lista de archivos JSON de proyectos con sus rutas
-const projectFiles = [
-    { path: 'exoplanetas-clasificacion-avanzada/data.json', slug: 'exoplanetas-clasificacion-avanzada' },
-    { path: 'sistema-de-gestion-para-academias-de-bjj/data.json', slug: 'sistema-de-gestion-para-academias-de-bjj' },
-    { path: 'sistema-de-gestion-de-entradas-y-tickets/data.json', slug: 'sistema-de-gestion-de-entradas-y-tickets' },
-    { path: 'portfolio-&-cms-personal/data.json', slug: 'portfolio-&-cms-personal' }
-];
-
 let allProjectsData = []; // Para almacenar todos los datos de los proyectos
 
 // Cargar proyectos en la página
@@ -20,18 +12,16 @@ async function loadProjects() {
         return;
     }
 
-    for (const projectInfo of projectFiles) {
-        try {
-            const response = await fetch(`${BASE_URL}proyectos/${projectInfo.path}`);
-            if (!response.ok) throw new Error(`Error al cargar ${projectInfo.path}`);
-            
-            const project = await response.json();
-            project.slug = projectInfo.slug;
-            allProjectsData.push(project); // Almacenar el proyecto cargado
-        } catch (error) {
-            console.error(`Error cargando el proyecto ${projectInfo.path}:`, error);
-            // No agregamos un elemento de error aquí, se manejará al renderizar
-        }
+    try {
+        const response = await fetch(`${BASE_URL}DB/proyectos.json`);
+        if (!response.ok) throw new Error('Error al cargar proyectos.json');
+        
+        allProjectsData = await response.json(); // Almacenar todos los proyectos cargados
+    } catch (error) {
+        console.error(`Error cargando los proyectos:`, error);
+        // Mostrar un mensaje de error en la interfaz si es necesario
+        projectsContainer.innerHTML = '<p class="text-center text-danger">Error al cargar los proyectos. Por favor, intente de nuevo más tarde.</p>';
+        return;
     }
     displayProjects(allProjectsData); // Mostrar todos los proyectos inicialmente
 }
@@ -89,7 +79,7 @@ function createProjectCard(project) {
             </div>
             
             <div class="project-links">
-                <a href="${BASE_URL}proyectos/${projectSlug}/" class="project-link" data-slug="${projectSlug}">
+                <a href="${BASE_URL}plantilla-proyecto.html?id=${project.id}" class="project-link" data-id="${project.id}">
                     <i class="bi bi-eye"></i> Ver detalles
                 </a>
                 ${project.code && project.code !== '#' ? `
@@ -106,7 +96,7 @@ function createProjectCard(project) {
     
     projectElement.addEventListener('click', (e) => {
         if (!e.target.closest('a')) {
-            window.location.href = `${BASE_URL}proyectos/${projectSlug}/`;
+            window.location.href = `${BASE_URL}plantilla-proyecto.html?id=${project.id}`;
         }
     });
     
