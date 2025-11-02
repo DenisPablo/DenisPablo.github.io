@@ -377,12 +377,8 @@ async function fetchGitHubStats() {
             const color = colors[index % colors.length];
 
             // Crear barra de progreso
-            const barContainer = document.createElement('div');
-            barContainer.className = 'progress mb-2';
-            barContainer.style.height = '20px';
-            
             const bar = document.createElement('div');
-            bar.className = 'progress-bar';
+            bar.className = 'language-bar'; /* Usar una clase específica para la barra interna */
             bar.style.width = `${percentage}%`;
             bar.style.backgroundColor = color;
             bar.setAttribute('role', 'progressbar');
@@ -392,8 +388,7 @@ async function fetchGitHubStats() {
             bar.setAttribute('data-lang', lang);
             bar.title = `${lang}: ${percentage.toFixed(1)}%`;
             
-            barContainer.appendChild(bar);
-            languageChart.appendChild(barContainer);
+            languageChart.appendChild(bar);
 
             // Crear ítem de leyenda
             const legendItem = document.createElement('div');

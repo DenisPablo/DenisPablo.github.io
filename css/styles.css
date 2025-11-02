@@ -851,6 +851,9 @@ footer p {
 .language-bar {
     height: 100%;
     transition: width 0.5s ease-out;
+    /* Asegurarse de que las barras internas se muestren correctamente */
+    display: block; /* Asegura que cada barra ocupe su espacio */
+    float: left; /* Permite que las barras se coloquen una al lado de la otra */
 }
 
 .language-legend {
